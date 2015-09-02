@@ -16,7 +16,7 @@ modul_config = {
     "label_plural": "",
     "str_repr": "",
     "display": "",
-    "actions": ["list", "read", "update", "create", "delete"]
+    "actions": ["list", "read", "update", "create", "delete", "download"]
 }
 
 
