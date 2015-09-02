@@ -18,11 +18,10 @@ from ringo.views.base import (
     update, rest_update,
     read
 )
-from ringo_printtemplate import Printtemplate
+from ringo.views.base import web_action_view_mapping, rest_action_view_mapping
 from ringo_printtemplate.lib.renderer import PrintDialogRenderer
 
 log = logging.getLogger(__name__)
-
 
 def save_file(request, item):
     """Helper function which is called after the validation of the form
@@ -106,22 +105,14 @@ def print_(request):
 ########################################################################
 
 
-@view_config(route_name=get_action_routename(Printtemplate, 'create'),
-             renderer='/default/create.mako',
-             permission='create')
 def create_(request):
     return create(request, callback=save_file)
 
 
-@view_config(route_name=get_action_routename(Printtemplate, 'update'),
-             renderer='/default/update.mako',
-             permission='update')
 def update_(request):
     return update(request, callback=save_file)
 
 
-@view_config(route_name=get_action_routename(Printtemplate, 'download'),
-             permission='download')
 def download(request):
     result = read(request)
     item = result['item']
@@ -132,19 +123,21 @@ def download(request):
     return response
 
 
-@view_config(route_name=get_action_routename(Printtemplate,
-                                             'create', prefix="rest"),
-             renderer='json',
-             request_method="POST",
-             permission='create')
 def rest_create_(request):
     return rest_create(request, callback=save_file)
 
 
-@view_config(route_name=get_action_routename(Printtemplate,
-                                             'update', prefix="rest"),
-             renderer='json',
-             request_method="PUT",
-             permission='update')
 def rest_update_(request):
     return rest_update(request, callback=save_file)
+
+web_action_view_mapping["default"]["print"] = print_
+# FIXME: 2015-09-02: Tried to overwrite the routing with view_config but
+# without success. So set the views in *_action_view_mapping. I think
+# its ok for now but I would prefer using view_config.
+web_action_view_mapping["printtemplates"] = {}
+web_action_view_mapping["printtemplates"]["create"] = create_
+web_action_view_mapping["printtemplates"]["update"] = update_
+web_action_view_mapping["printtemplates"]["download"] = download
+rest_action_view_mapping["printtemplates"] = {}
+rest_action_view_mapping["printtemplates"]["create"] = rest_create_
+rest_action_view_mapping["printtemplates"]["update"] = rest_update_
