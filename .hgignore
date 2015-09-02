@@ -1,1 +1,5 @@
-^docs/_build
+syntax: glob
+*.pyc
+*.swp
+syntax: regexp
+^ringo_printtemplate.egg-info/*
