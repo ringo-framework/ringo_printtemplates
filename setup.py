@@ -5,8 +5,8 @@ version = '0.1'
 
 setup(name='ringo_printtemplate',
       version=version,
-      description="Extension for the ringo webframework",
-      long_description="""""",
+      description="Printtemplates for the ringo webframework",
+      long_description="""This is a extension for the ringo framework. It allows you to upload printtemplate which can pe prefilled with data of an item for later printing.""",
       classifiers=[], # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
       keywords='ringo pyramid extension',
       author='',
