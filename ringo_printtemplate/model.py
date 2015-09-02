@@ -66,7 +66,7 @@ class Printable(Mixin):
         tbl_name = "nm_%s_printtemplates" % cls.__name__.lower()
         nm_table = sa.Table(tbl_name, Base.metadata,
                             sa.Column('iid', sa.Integer,
-                                      sa.orm.ForeignKey(cls.id)),
+                                      sa.ForeignKey(cls.id)),
                             sa.Column('tid', sa.Integer,
                                       sa.ForeignKey("printtemplates.id")))
         logs = sa.orm.relationship(Printtemplate, secondary=nm_table)
