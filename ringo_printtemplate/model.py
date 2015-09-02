@@ -62,7 +62,6 @@ class Printable(Mixin):
     # printdialog (ti) <2014-10-27 12:28>
     @declared_attr
     def printtemplates(cls):
-        from ringo.model.printtemplate import Printtemplate
         tbl_name = "nm_%s_printtemplates" % cls.__name__.lower()
         nm_table = sa.Table(tbl_name, Base.metadata,
                             sa.Column('iid', sa.Integer,
