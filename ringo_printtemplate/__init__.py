@@ -2,7 +2,6 @@ import logging
 from pyramid.i18n import TranslationStringFactory
 from ringo.lib.i18n import translators
 from ringo.lib.extension import register_modul
-from ringo.lib.helpers import dynamic_import
 
 # Import models so that alembic is able to autogenerate migrations
 # scripts.
@@ -31,4 +30,3 @@ def includeme(config):
     Printtemplate._modul_id = modul.get_value("id")
     translators.append(TranslationStringFactory('ringo_printtemplate'))
     config.add_translation_dirs('ringo_printtemplate:locale/')
-
