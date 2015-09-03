@@ -7,6 +7,9 @@ from ringo.lib.extension import register_modul
 # scripts.
 from ringo_printtemplate.model import Printtemplate
 
+# This import is needed to trigger "registering" the views.
+import ringo_printtemplate.views
+
 log = logging.getLogger(__name__)
 
 modul_config = {
