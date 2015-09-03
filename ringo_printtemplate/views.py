@@ -4,9 +4,7 @@ import logging
 import StringIO
 import mimetypes
 from py3o.template import Template
-from pyramid.view import view_config
 
-from ringo.lib.helpers import get_action_routename
 from ringo.views.request import (
     handle_params,
     handle_history,
@@ -22,6 +20,7 @@ from ringo.views.base import web_action_view_mapping, rest_action_view_mapping
 from ringo_printtemplate.lib.renderer import PrintDialogRenderer
 
 log = logging.getLogger(__name__)
+
 
 def save_file(request, item):
     """Helper function which is called after the validation of the form
