@@ -3,6 +3,7 @@
 import logging
 import StringIO
 import mimetypes
+from pyramid.view import view_config
 from py3o.template import Template
 
 from ringo.views.request import (
@@ -10,6 +11,7 @@ from ringo.views.request import (
     handle_history,
     is_confirmed,
     get_item_from_request,
+    get_action_routename
 )
 from ringo.views.base import (
     create, rest_create,
@@ -18,6 +20,7 @@ from ringo.views.base import (
 )
 from ringo.views.base import web_action_view_mapping, rest_action_view_mapping
 from ringo_printtemplate.lib.renderer import PrintDialogRenderer
+from ringo_printtemplate.model import Printtemplate
 
 log = logging.getLogger(__name__)
 
@@ -96,6 +99,15 @@ def _build_response(request, template, data):
     resp.content_disposition = 'attachment; filename="%s.odt"' % template.name
     resp.body = data.getvalue()
     return resp
+
+@view_config(route_name=get_action_routename(Printtemplate, 'print'),
+             renderer='/default/print.mako')
+def generic_print(request):
+    item = DummyPrintItem(request.params)
+    template = request.db.query(Printtemplate).filter(Printtemplate.id == request.matchdict['id']).one()
+    out = _render_template(template, item)
+    # Build response
+    return _build_response(request, template, out)
 
 
 def print_(request):
