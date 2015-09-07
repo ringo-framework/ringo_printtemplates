@@ -22,6 +22,28 @@ from ringo_printtemplate.lib.renderer import PrintDialogRenderer
 log = logging.getLogger(__name__)
 
 
+class DummyPrintItem(object):
+
+    """Dummy Item used for printing a given set of values in a dictionary"""
+
+    def __init__(self, values):
+        """Will convert the given values in the dictionary into
+        attributes of the object. Nested dictionarys are currently not
+        supported.
+
+        :values: Dict of values.
+
+        """
+        self._values = values
+        for key in self._values:
+            setattr(self, key, self._values(key))
+
+    def __getattr__(self, key):
+        if key == 'totuple':
+            raise AttributeError()
+        return ""
+
+
 def save_file(request, item):
     """Helper function which is called after the validation of the form
     succeeds. The function will get the data from the file from the
