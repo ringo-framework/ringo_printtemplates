@@ -39,7 +39,7 @@ class DummyPrintItem(object):
         """
         self._values = values
         for key in self._values:
-            setattr(self, key, self._values(key))
+            setattr(self, key, self._values[key])
 
     def __getattr__(self, key):
         if key == 'totuple':
@@ -103,7 +103,7 @@ def _build_response(request, template, data):
 @view_config(route_name=get_action_routename(Printtemplate, 'print'),
              renderer='/default/print.mako')
 def generic_print(request):
-    item = DummyPrintItem(request.params)
+    item = DummyPrintItem(request.params.mixed())
     template = request.db.query(Printtemplate).filter(Printtemplate.id == request.matchdict['id']).one()
     out = _render_template(template, item)
     # Build response
