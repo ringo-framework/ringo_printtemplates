@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <configuration xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="ringo">
   <source>
-    <entity id="name" name="name" label="Name" type="string">
+    <entity id="name" name="name" label="Name" type="string" required="true">
+      <help>The name will be used as the file name for the generated template during the download.</help>
     </entity>
     <entity id="file" name="file" label="File" type="file"/>
     <entity id="description" name="description" label="Description" type="string">
@@ -9,8 +10,9 @@
     </entity>
     <entity id="size" name="size" label="Size" type="integer" readonly="true"/>
     <entity id="mime" name="mime" label="Mime" readonly="true"/>
-    <entity id="mid" name="modul" label="Modul">
+    <entity id="mid" name="modul" label="Modul" required="true">
       <renderer type="dropdown"/>
+      <help>Please select the module for which the template is to be available.</help>
     </entity>
   </source>
   <form id="create" autocomplete="off" method="POST" action="" enctype="multipart/form-data">
