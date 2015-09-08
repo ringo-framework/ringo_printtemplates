@@ -48,6 +48,17 @@ class DummyPrintItem(object):
             raise AttributeError()
         return ""
 
+def load_file(data):
+    if data.startswith("@"):
+        # Load the data from the filesystem.
+        # Path is @package:/path/to/file/relative/to/package/file
+        app = get_app_location(data.split(":")[0].strip("@"))
+        rel_path = data.split(":")[1]
+        full_path = os.path.join(app, rel_path)
+        with open(full_path, "r") as tf:
+            data = tf.read()
+    return data
+
 
 def save_file(request, item):
     """Helper function which is called after the validation of the form
@@ -82,15 +93,7 @@ def _render_template(template, item):
 
     """
     out = StringIO.StringIO()
-    data = template.data
-    if data.startswith("@"):
-        # Load the data from the filesystem.
-        # Path is @package:/path/to/file/relative/to/package/file
-        app = get_app_location(data.split(":")[0].strip("@"))
-        rel_path = data.split(":")[1]
-        full_path = os.path.join(app, rel_path)
-        with open(full_path, "r") as tf:
-            data = tf.read()
+    data = load_file(template.data)
     temp = Template(StringIO.StringIO(data), out)
     temp.render({"item": item})
     return out
@@ -164,7 +167,7 @@ def download(request):
     response = request.response
     response.content_type = str(item.mime)
     response.content_disposition = 'attachment; filename=%s' % item.name
-    response.body = item.data
+    response.body = load_file(item.data)
     return response
 
 
