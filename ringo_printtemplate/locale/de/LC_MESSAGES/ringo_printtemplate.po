@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ringo_printtemplate 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-09-02 19:36+0200\n"
+"POT-Creation-Date: 2015-09-14 22:22+0200\n"
 "PO-Revision-Date: 2015-09-02 19:27+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: de <LL@li.org>\n"
@@ -59,6 +59,18 @@ msgstr "Größe"
 msgid "Mime"
 msgstr ""
 
+#: ringo_printtemplate/printtemplates.xml:7
+msgid ""
+"The name will be used as the file name for the generated template during "
+"the download."
+msgstr ""
+"Der Name wird als Dateiname für die generierte Vorlage beim Download "
+"genutzt."
+
+#: ringo_printtemplate/printtemplates.xml:8
+msgid "Please select the module for which the template is to be available."
+msgstr "Bitte wählen Sie das Modul für das diese Vorlage verfügbar sein soll."
+
 #: ringo_printtemplate/templates/internal/print.mako:5
 msgid "Printtemplates for"
 msgstr "Druckvorlage für"
@@ -86,3 +98,4 @@ msgstr "Druckvorlage herunterladen"
 #: ringo_printtemplate/templates/internal/print.mako:13
 msgid "Close"
 msgstr "Schließen"
+

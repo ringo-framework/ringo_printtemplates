@@ -7,9 +7,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ringo_printtemplate 0.0\n"
+"Project-Id-Version: ringo_printtemplate 0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-09-02 19:36+0200\n"
+"POT-Creation-Date: 2015-09-14 22:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,6 +57,16 @@ msgstr ""
 #. Label for mime field in form config
 #: ringo_printtemplate/printtemplates.xml:5
 msgid "Mime"
+msgstr ""
+
+#: ringo_printtemplate/printtemplates.xml:7
+msgid ""
+"The name will be used as the file name for the generated template during the "
+"download."
+msgstr ""
+
+#: ringo_printtemplate/printtemplates.xml:8
+msgid "Please select the module for which the template is to be available."
 msgstr ""
 
 #: ringo_printtemplate/templates/internal/print.mako:5
