@@ -109,7 +109,7 @@ def _build_response(request, template, data):
 
     """
     resp = request.response
-    resp.content_type = str(template.mime)
+    resp.content_type = str(mimetypes.guess_type(data.getvalue()))
     resp.content_disposition = 'attachment; filename="%s.odt"' % template.name
     resp.body = data.getvalue()
     return resp
