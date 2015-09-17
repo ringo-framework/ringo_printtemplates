@@ -5,6 +5,8 @@ from ringo.model import Base
 from ringo.model.base import BaseItem, BaseFactory
 from ringo.model.mixins import Mixin, Owned
 
+_ = lambda x: x
+
 
 class PrinttemplateFactory(BaseFactory):
 
@@ -50,7 +52,7 @@ class Printable(Mixin):
         actions = []
         # Add Print action
         action = ActionItem()
-        action.name = 'Print'
+        action.name = _('Print')
         action.url = 'print/{id}'
         action.icon = 'glyphicon glyphicon-print'
         action.display = 'secondary'
