@@ -6,4 +6,6 @@ recursive-include test *.xml
 recursive-include ringo_printtemplate/locale *.po *.mo *.pot
 recursive-include ringo_printtemplate/static *
 recursive-include ringo_printtemplate/templates *.mako
+include ringo_printtemplate/printtemplates.*
+include ringo_printtemplate/print.xml
 global-exclude *.orig
