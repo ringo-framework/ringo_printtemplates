@@ -118,12 +118,19 @@ def _build_response(request, template, data):
 @view_config(route_name=get_action_routename(Printtemplate, 'print'),
              renderer='/default/print.mako')
 def generic_print(request):
-    item = DummyPrintItem(request.params.mixed())
-    template = request.db.query(Printtemplate).filter(Printtemplate.id == request.matchdict['id']).one()
-    out = _render_template(template, item)
-    # Build response
-    return _build_response(request, template, out)
+    data = request.params.mixed()
+    template = retrieve_print_template(request, request.matchdict['id'])
+    return print_template(request, data, template)
 
+
+def retrieve_print_template(request, id):
+    return request.db.query(Printtemplate).filter(Printtemplate.id == id).one()
+
+
+def print_template(request, data, template):
+    item = DummyPrintItem(data)
+    out = _render_template(template, item)
+    return _build_response(request, template, out)
 
 def print_(request):
     handle_history(request)
