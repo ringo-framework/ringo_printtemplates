@@ -1,6 +1,0 @@
-syntax: glob
-*.pyc
-*.swp
-*.mo
-syntax: regexp
-^ringo_printtemplate.egg-info/*
