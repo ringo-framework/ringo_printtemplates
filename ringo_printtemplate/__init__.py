@@ -30,8 +30,9 @@ def includeme(config):
 
     """
     modul = register_modul(config, modul_config)
-    Printtemplate._modul_id = modul.get_value("id")
-    translators.append(TranslationStringFactory('ringo_printtemplate'))
-    config.add_translation_dirs('ringo_printtemplate:locale/')
-    config.add_route('printtemplates-print', '/printtemplates/print/{id}')
-    config.scan()
+    if modul:
+        Printtemplate._modul_id = modul.get_value("id")
+        translators.append(TranslationStringFactory('ringo_printtemplate'))
+        config.add_translation_dirs('ringo_printtemplate:locale/')
+        config.add_route('printtemplates-print', '/printtemplates/print/{id}')
+        config.scan()
