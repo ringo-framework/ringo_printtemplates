@@ -18,7 +18,8 @@ setup(name='ringo_printtemplate',
       zip_safe=False,
       install_requires=[
           'ringo',
-          'py3o.template'
+          'py3o.template',
+          'genshi'
       ],
       entry_points="""
       # -*- Entry points: -*-
