@@ -6,6 +6,7 @@ import StringIO
 import mimetypes
 from pyramid.view import view_config
 from py3o.template import Template
+from genshi.core import Markup
 
 from ringo.views.request import (
     handle_params,
@@ -84,6 +85,19 @@ def save_file(request, item):
     return item
 
 
+class PrintValueGetter(object):
+
+    def __init__(self, item):
+        self.item = item
+
+    def __getattr__(self, name):
+        if hasattr(self.item, name):
+            value = self.item.get_value(name, expand=True)
+            if isinstance(value, basestring):
+                value = Markup(value.replace("\n", "<text:line-break/>"))
+            return value
+
+
 def _render_template(template, item):
     """Will render the given template with the items data.
 
@@ -95,7 +109,7 @@ def _render_template(template, item):
     out = StringIO.StringIO()
     data = load_file(template.data)
     temp = Template(StringIO.StringIO(data), out)
-    temp.render({"item": item})
+    temp.render({"item": item, "print_item": PrintValueGetter(item)})
     return out
 
 
