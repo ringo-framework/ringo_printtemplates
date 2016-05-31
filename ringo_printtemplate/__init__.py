@@ -13,7 +13,7 @@ import ringo_printtemplate.views
 log = logging.getLogger(__name__)
 
 modul_config = {
-    "name": "printtemplate",
+    "name": "printtemplates",
     "label": "",
     "clazzpath": "ringo_printtemplate.model.Printtemplate",
     "label_plural": "",
