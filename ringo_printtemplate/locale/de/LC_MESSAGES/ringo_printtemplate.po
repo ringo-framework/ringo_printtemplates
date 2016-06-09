@@ -25,7 +25,7 @@ msgstr "Drucken"
 #. Label for printtemplates field in form config
 #: ringo_printtemplate/print.xml:1
 msgid "Printtemplate"
-msgstr "Druckvorlage"
+msgstr "Druckdatei"
 
 #. Label for name column in overview table config
 #. Label for name field in form config
@@ -77,7 +77,7 @@ msgstr "Bitte wählen Sie das Modul für das diese Vorlage verfügbar sein soll.
 
 #: ringo_printtemplate/templates/internal/print.mako:5
 msgid "Printtemplates for"
-msgstr "Druckvorlage für"
+msgstr "Druckdatei für"
 
 #: ringo_printtemplate/templates/internal/print.mako:7
 msgid ""
@@ -85,7 +85,7 @@ msgid ""
 "for printing. The template will be downloaded and can be opened with an "
 "appropriate application."
 msgstr ""
-"Bitte wählen Sie eine Druckvorlage von der Liste, die Sie für den "
+"Bitte wählen Sie eine Druckdatei von der Liste, die Sie für den "
 "Ausdruck verwenden wollen. Die Vorlage wird heruntergeladen und kann mit "
 "einer passenden Anwendung für den Ausdruck geöffnet werden."
 
@@ -97,7 +97,7 @@ msgstr ""
 
 #: ringo_printtemplate/templates/internal/print.mako:12
 msgid "Download Printtemplate"
-msgstr "Druckvorlage herunterladen"
+msgstr "Druckdatei herunterladen"
 
 #: ringo_printtemplate/templates/internal/print.mako:13
 msgid "Close"
