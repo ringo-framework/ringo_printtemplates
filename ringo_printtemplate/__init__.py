@@ -35,4 +35,5 @@ def includeme(config):
         translators.append(TranslationStringFactory('ringo_printtemplate'))
         config.add_translation_dirs('ringo_printtemplate:locale/')
         config.add_route('printtemplates-print', '/printtemplates/print/{id}')
+        config.include('ringo_printtemplate.odfconv.setup')
         config.scan()

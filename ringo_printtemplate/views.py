@@ -16,6 +16,7 @@ from ringo.views.request import (
     get_action_routename
 )
 from ringo.lib.helpers import get_app_location
+from ringo.lib.odfconv import get_converter
 from ringo.views.base import (
     create, rest_create,
     update, rest_update,
@@ -159,6 +160,16 @@ def print_(request):
         # Render the template
         out = _render_template(template, item)
         # Build response
+        
+        converter = get_converter()
+        if converter and converter.is_available():
+            out.seek(0)
+            out = converter.convert(out.read(), "pdf")
+            resp = request.response
+            resp.content_type = str(mimetypes.guess_type(out))
+            resp.content_disposition = 'attachment; filename="%s.pdf"' % template.name
+            resp.body = out
+            return resp
         return _build_response(request, template, out)
     else:
         clazz = item.__class__
