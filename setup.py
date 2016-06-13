@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from setuptools import setup, find_packages
 import sys, os
 
@@ -5,14 +8,14 @@ version = '1.1'
 
 setup(name='ringo_printtemplate',
       version=version,
-      description="Printtemplates for the ringo webframework",
+      description="Extension for printtemplates in the ringo webframework",
       long_description="""This is a extension for the ringo framework. It allows you to upload printtemplate which can pe prefilled with data of an item for later printing.""",
       classifiers=[], # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
       keywords='ringo pyramid extension',
-      author='',
-      author_email='',
-      url='',
-      license='GPL',
+      author='Torsten Irländer',
+      author_email='torsten.irlaender@googlemail.com',
+      url='https://github.com/ringo-framework/ringo_printtemplates',
+      license='MIT',
       packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
       include_package_data=True,
       zip_safe=False,
