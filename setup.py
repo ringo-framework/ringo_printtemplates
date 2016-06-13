@@ -22,6 +22,7 @@ setup(name='ringo_printtemplate',
       install_requires=[
           'ringo',
           'py3o.template',
+          'py3o.renderers.pyuno',
           'genshi'
       ],
       entry_points="""
