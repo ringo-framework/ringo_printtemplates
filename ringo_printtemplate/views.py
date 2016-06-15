@@ -16,7 +16,6 @@ from ringo.views.request import (
     get_action_routename
 )
 from ringo.lib.helpers import get_app_location
-from ringo.lib.odfconv import get_converter
 from ringo.views.base import (
     create, rest_create,
     update, rest_update,
@@ -24,6 +23,7 @@ from ringo.views.base import (
 )
 from ringo.views.base import web_action_view_mapping, rest_action_view_mapping
 from ringo_printtemplate.lib.renderer import PrintDialogRenderer
+from ringo_printtemplate.odfconv import get_converter
 from ringo_printtemplate.model import Printtemplate
 
 log = logging.getLogger(__name__)
@@ -160,7 +160,7 @@ def print_(request):
         # Render the template
         out = _render_template(template, item)
         # Build response
-        
+
         converter = get_converter()
         if converter and converter.is_available():
             out.seek(0)
