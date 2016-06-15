@@ -32,8 +32,8 @@ class Converter(object):
             self._available = True
             log.info("Office Server for document conversation started.")
         except:
-            log.warning("Office not started. Converter is not"
-                        "available. Forgot to install Libreoffice?")
+            log.exception("Office not started. Converter is not"
+                          "available. Forgot to install Libreoffice?")
 
     def is_available(self):
         return self._available
