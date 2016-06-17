@@ -4,6 +4,7 @@ import os
 import logging
 import StringIO
 import mimetypes
+from xml.sax.saxutils import escape
 from pyramid.view import view_config
 from py3o.template import Template
 from genshi.core import Markup
@@ -95,6 +96,7 @@ class PrintValueGetter(object):
         if hasattr(self.item, name):
             value = self.item.get_value(name, expand=True)
             if isinstance(value, basestring):
+                value = escape(value)
                 value = Markup(value.replace("\n", "<text:line-break/>"))
             return value
 
