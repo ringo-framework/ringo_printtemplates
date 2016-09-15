@@ -16,7 +16,7 @@ from ringo.views.request import (
     get_item_from_request,
     get_action_routename
 )
-from ringo.lib.helpers import get_app_location
+from ringo.lib.helpers import get_app_location, prettify
 from ringo.views.base import (
     create, rest_create,
     update, rest_update,
@@ -89,8 +89,9 @@ def save_file(request, item):
 
 class PrintValueGetter(object):
 
-    def __init__(self, item):
+    def __init__(self, item, request):
         self.item = item
+        self.request = request
 
     def __getattr__(self, name):
         if hasattr(self.item, name):
@@ -98,10 +99,10 @@ class PrintValueGetter(object):
             if isinstance(value, basestring):
                 value = escape(value)
                 value = Markup(value.replace("\n", "<text:line-break/>"))
-            return value
+            return prettify(self.request, value)
 
 
-def _render_template(template, item):
+def _render_template(request, template, item):
     """Will render the given template with the items data.
 
     :template: @todo
@@ -112,7 +113,7 @@ def _render_template(template, item):
     out = StringIO.StringIO()
     data = load_file(template.data)
     temp = Template(StringIO.StringIO(data), out)
-    temp.render({"item": item, "print_item": PrintValueGetter(item)})
+    temp.render({"item": item, "print_item": PrintValueGetter(item, request)})
     return out
 
 
@@ -146,7 +147,7 @@ def retrieve_print_template(request, id):
 
 def print_template(request, data, template):
     item = DummyPrintItem(data)
-    out = _render_template(template, item)
+    out = _render_template(request, template, item)
     return _build_response(request, template, out)
 
 def print_(request):
@@ -160,7 +161,7 @@ def print_(request):
        and form.validate(request.params)):
         template = form.data.get('printtemplates')[0]
         # Render the template
-        out = _render_template(template, item)
+        out = _render_template(request, template, item)
         # Build response
 
         converter = get_converter()
