@@ -95,6 +95,12 @@ class PrintValueGetter(object):
         self.item = item
         self.request = request
 
+    def __str__(self):
+        return str(self.item)
+
+    def __unicode__(self):
+        return unicode(self.item)
+
     def __getattr__(self, name):
         if hasattr(self.item, name):
             value = self.item.get_value(name, expand=True)
