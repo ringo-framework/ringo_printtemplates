@@ -16,6 +16,7 @@ from ringo.views.request import (
     get_item_from_request,
     get_action_routename
 )
+from ringo.model.base import BaseItem
 from ringo.lib.helpers import get_app_location, prettify
 from ringo.views.base import (
     create, rest_create,
@@ -97,10 +98,13 @@ class PrintValueGetter(object):
     def __getattr__(self, name):
         if hasattr(self.item, name):
             value = self.item.get_value(name, expand=True)
-            if isinstance(value, basestring):
+            if isinstance(value, BaseItem):
+                return PrintValueGetter(value, self.request)
+            elif isinstance(value, basestring):
                 value = escape(value)
-                value = Markup(value.replace("\n", "<text:line-break/>"))
-            return prettify(self.request, value)
+                return Markup(value.replace("\n", "<text:line-break/>"))
+            else:
+                return prettify(self.request, value)
 
 
 def _render_template(request, template, item):
