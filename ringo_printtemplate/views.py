@@ -51,6 +51,7 @@ class DummyPrintItem(object):
             raise AttributeError()
         return ""
 
+
 def load_file(data):
     if data.startswith("@"):
         # Load the data from the filesystem.
@@ -150,15 +151,16 @@ def print_template(request, data, template):
     out = _render_template(request, template, item)
     return _build_response(request, template, out)
 
+
 def print_(request):
     handle_history(request)
     handle_params(request)
     item = get_item_from_request(request)
     renderer = PrintDialogRenderer(request, item)
     form = renderer.form
-    if (request.method == 'POST'
-       and is_confirmed(request)
-       and form.validate(request.params)):
+    if (request.method == 'POST' and
+       is_confirmed(request) and
+       form.validate(request.params)):
         template = form.data.get('printtemplates')[0]
         # Render the template
         out = _render_template(request, template, item)
@@ -170,7 +172,8 @@ def print_(request):
             out = converter.convert(out.read(), "pdf")
             resp = request.response
             resp.content_type = str(mimetypes.guess_type(out))
-            resp.content_disposition = 'attachment; filename="%s.pdf"' % template.name
+            resp.content_disposition = 'attachment; filename="%s.pdf"' \
+                                       % template.name
             resp.body = out
             return resp
         return _build_response(request, template, out)
