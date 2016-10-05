@@ -11,7 +11,7 @@
     <entity id="size" name="size" label="Size" type="integer" readonly="true"/>
     <entity id="mime" name="mime" label="Mime" readonly="true"/>
     <entity id="mid" name="modul" label="Modul" required="true">
-      <renderer type="dropdown"/>
+      <renderer type="dropdown" filter="'Printable' in %clazzbases"/>
       <help>Please select the module for which the template is to be available.</help>
     </entity>
   </source>
