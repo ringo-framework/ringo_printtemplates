@@ -1,4 +1,4 @@
-<form action="${ok_url}" method="POST">
+<form action="${ok_url}" method="POST" no-dirtyable="true">
   <div class="dialog modal fade" id="myModal">
     <div class="modal-dialog">
       <div class="panel panel-default">
