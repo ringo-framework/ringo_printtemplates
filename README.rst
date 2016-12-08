@@ -25,3 +25,18 @@ The following configuation variables are available::
         converter.start = false
         # Set python path for the Converter. Defaults to the system python
         converter.python = /usr/bin/python3
+
+Requirements
+------------
+If you encounter the following message on installation::
+
+        ERROR: /bin/sh: xslt-config: Kommando nicht gefunden
+        ** make sure the development packages of libxml2 and libxslt are installed **
+
+You need to install the following packages if you want to compile lxml for
+yourself::
+
+        apt-get install libxml2-dev libxslt1-dev
+
+An alternative might be to install lxml globally on your system and give your
+virtual environment access to it.
