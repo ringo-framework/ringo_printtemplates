@@ -159,6 +159,16 @@ def retrieve_print_template(request, id):
 def print_template(request, data, template):
     item = DummyPrintItem(data)
     out = _render_template(request, template, item)
+    converter = get_converter()
+    if converter and converter.is_available():
+        out.seek(0)
+        out = converter.convert(out.read(), "pdf")
+        resp = request.response
+        resp.content_type = str(mimetypes.guess_type(out))
+        resp.content_disposition = 'attachment; filename="%s.pdf"' \
+                                   % template.name
+        resp.body = out
+        return resp
     return _build_response(request, template, out)
 
 
