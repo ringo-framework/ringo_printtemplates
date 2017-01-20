@@ -156,9 +156,7 @@ def retrieve_print_template(request, id):
     return request.db.query(Printtemplate).filter(Printtemplate.id == id).one()
 
 
-def print_template(request, data, template):
-    item = DummyPrintItem(data)
-    out = _render_template(request, template, item)
+def _build_final_response(out, request, template):
     converter = get_converter()
     if converter and converter.is_available():
         out.seek(0)
@@ -168,8 +166,16 @@ def print_template(request, data, template):
         resp.content_disposition = 'attachment; filename="%s.pdf"' \
                                    % template.name
         resp.body = out
-        return resp
-    return _build_response(request, template, out)
+        result = resp
+    else:
+        result = _build_response(request, template, out)
+    return result
+
+
+def print_template(request, data, template):
+    item = DummyPrintItem(data)
+    out = _render_template(request, template, item)
+    return _build_final_response(out, request, template)
 
 
 def print_(request):
@@ -182,21 +188,8 @@ def print_(request):
        is_confirmed(request) and
        form.validate(request.params)):
         template = form.data.get('printtemplates')[0]
-        # Render the template
         out = _render_template(request, template, item)
-        # Build response
-
-        converter = get_converter()
-        if converter and converter.is_available():
-            out.seek(0)
-            out = converter.convert(out.read(), "pdf")
-            resp = request.response
-            resp.content_type = str(mimetypes.guess_type(out))
-            resp.content_disposition = 'attachment; filename="%s.pdf"' \
-                                       % template.name
-            resp.body = out
-            return resp
-        return _build_response(request, template, out)
+        return _build_final_response(out, request, template)
     else:
         clazz = item.__class__
         rvalue = {}
