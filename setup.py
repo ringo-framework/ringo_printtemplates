@@ -4,7 +4,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '1.2.3'
+version = '1.2.4'
 
 setup(name='ringo_printtemplate',
       version=version,
