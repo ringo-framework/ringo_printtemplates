@@ -128,22 +128,6 @@ def _render_template(request, template, item):
     return out
 
 
-def _build_response(request, template, data):
-    """Will return a response object with the rendererd template
-
-    :request: Current request
-    :template: The template.
-    :data: Payload of the response
-    :returns: Response object.
-
-    """
-    resp = request.response
-    resp.content_type = str(mimetypes.guess_type(data.getvalue()))
-    resp.content_disposition = 'attachment; filename="%s.odt"' % template.name
-    resp.body = data.getvalue()
-    return resp
-
-
 @view_config(route_name=get_action_routename(Printtemplate, 'print'),
              renderer='/default/print.mako')
 def generic_print(request):
@@ -157,19 +141,32 @@ def retrieve_print_template(request, id):
 
 
 def _build_final_response(out, request, template):
+    """Will return a response object with the rendererd template
+
+    :request: Current request
+    :template: The template.
+    :out: Payload of the response
+    :returns: Response object.
+
+    """
     converter = get_converter()
     if converter and converter.is_available():
         out.seek(0)
         out = converter.convert(out.read(), "pdf")
-        resp = request.response
-        resp.content_type = str(mimetypes.guess_type(out))
-        resp.content_disposition = 'attachment; filename="%s.pdf"' \
-                                   % template.name
-        resp.body = out
-        result = resp
+        result = _build_response(out, request, template, "pdf")
     else:
-        result = _build_response(request, template, out)
+        result = _build_response(out.getvalue(), request, template, "odt")
     return result
+
+
+def _build_response(out, request, template, extension):
+    resp = request.response
+    filename = "%s.%s" % (template.name, extension)
+    mimetype = mimetypes.guess_type(filename)
+    resp.content_type = str(mimetype)
+    resp.content_disposition = 'attachment; filename="%s"' % filename
+    resp.body = out
+    return resp
 
 
 def print_template(request, data, template):
