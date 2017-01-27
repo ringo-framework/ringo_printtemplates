@@ -1,3 +1,4 @@
+import os
 from tempfile import NamedTemporaryFile
 import logging
 from ringo.lib.cache import CACHE_MISC
@@ -43,6 +44,9 @@ class Converter(object):
 
     def _get_infile(self, data):
         infile = NamedTemporaryFile()
+        # Make file world readable. This prevents errors when other
+        # users trying to use the converter.
+        os.chmod(infile.name, 0o666)
         infile.write(data)
         infile.seek(0)
         return infile
@@ -57,6 +61,7 @@ class Converter(object):
         """
         infile = self._get_infile(data)
         outfile = NamedTemporaryFile()
+        os.chmod(outfile.name, 0o666)
         # Update needs a patch
         #self._converter.convert(infile.name, outfile.name, format, update)
         self._converter.convert(infile.name, outfile.name, format)
