@@ -8,22 +8,25 @@ log = logging.getLogger(__name__)
 def setup(config):
     settings = config.registry.settings
     pythonpath = settings.get('converter.python')
+    port = settings.get('converter.port', 2002)
     if settings.get('converter.start') == 'true':
-        converter = Converter(python=pythonpath)
+        converter = Converter(python=pythonpath, port=port)
         converter.start()
         CACHE_MISC.set("converter", converter)
 
+
 def get_converter():
     return CACHE_MISC.get("converter")
+
 
 class Converter(object):
 
     """Converter to convert ODF documents into other formats like pdf,
     xls, doc."""
 
-    def __init__(self, python=None):
+    def __init__(self, python=None, port=None):
         from py3o.renderers.pyuno.main import Convertor
-        self._converter = Convertor(python=python)
+        self._converter = Convertor(python=python, port=port)
         self._available = False
 
     def start(self):
