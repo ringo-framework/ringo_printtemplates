@@ -25,6 +25,8 @@ The following configuation variables are available::
         converter.start = false
         # Set python path for the Converter. Defaults to the system python
         converter.python = /usr/bin/python3
+        # Set port of which the client listen. Defaults to 2002
+        converter.port = 2002
 
 Requirements
 ------------
