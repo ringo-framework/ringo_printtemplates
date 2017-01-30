@@ -4,7 +4,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '1.2.5'
+version = '1.3.0'
 
 setup(name='ringo_printtemplate',
       version=version,
@@ -23,8 +23,10 @@ setup(name='ringo_printtemplate',
           'ringo',
           'py3o.template',
           'py3o.renderers.pyuno',
-          'genshi'
+          'genshi',
+          'requests'
       ],
+      scripts=['ringo-odfconverter'],
       entry_points="""
       # -*- Entry points: -*-
       [babel.extractors]
