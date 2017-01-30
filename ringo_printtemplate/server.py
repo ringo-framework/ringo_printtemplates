@@ -25,7 +25,6 @@ def convert(request):
 
 
 def run(host='0.0.0.0', port=5000, oopython='/usr/bin/python', ooport=2001):
-    global CONVERTER
     config = Configurator()
     config = setup_server(config, oopython, ooport)
     app = config.make_wsgi_app()
@@ -35,6 +34,7 @@ def run(host='0.0.0.0', port=5000, oopython='/usr/bin/python', ooport=2001):
     server.serve_forever()
 
 def setup_server(config, oopython='/usr/bin/python', ooport=2001):
+    global CONVERTER
     config.add_route('ping', '/')
     config.add_route('convert', '/{format}')
     config.add_view(ping, route_name='ping')
