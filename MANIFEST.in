@@ -1,4 +1,4 @@
-include README.rst *.txt COPYING
+include README.rst *.txt *.ini COPYING
 recursive-include docs *
 recursive-include examples *
 recursive-include contrib *

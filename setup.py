@@ -28,7 +28,8 @@ setup(name='ringo_printtemplate',
       ],
       scripts=['ringo-odfconverter'],
       entry_points="""
-      # -*- Entry points: -*-
+      [paste.app_factory]
+      main = ringo_printtemplate:main
       [babel.extractors]
       tableconfig = ringo.lib.i18n:extract_i18n_tableconfig
       formconfig = formbar.i18n:extract_i18n_formconfig

@@ -27,17 +27,21 @@ def convert(request):
 def run(host='0.0.0.0', port=5000, oopython='/usr/bin/python', ooport=2001):
     global CONVERTER
     config = Configurator()
+    config = setup_server(config, oopython, ooport)
+    app = config.make_wsgi_app()
+    server = make_server(host, port, app)
+    print("Office for convertsion started.")
+    print("Running Server on {}:{}.".format(host, port))
+    server.serve_forever()
+
+def setup_server(config, oopython='/usr/bin/python', ooport=2001):
     config.add_route('ping', '/')
     config.add_route('convert', '/{format}')
     config.add_view(ping, route_name='ping')
     config.add_view(convert, route_name='convert')
-    app = config.make_wsgi_app()
-    server = make_server(host, port, app)
     CONVERTER = Converter(oopython, ooport)
     CONVERTER.start()
-    print("Office for convertsion started.")
-    print("Running Server on {}:{}.".format(host, port))
-    server.serve_forever()
+    return config
 
 if __name__ == '__main__':
     run()
