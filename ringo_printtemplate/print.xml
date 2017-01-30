@@ -5,13 +5,28 @@
     <entity id="e1" name="printtemplates" label="Printtemplate">
       <renderer type="dropdown" filter="@_modul_id eq %modul.id" remove_filtered="true"/>
     </entity>
+    <entity id="_converter_available" name="_converter_available">
+      <renderer type="hidden"/>
+    </entity>
+    <entity id="convert" name="convert" label="" value="1">
+      <renderer type="radio"/>
+      <options>
+        <option value="1">Download as PDF</option>
+        <option value="0">Download as ODT</option>
+      </options>
+    </entity>
   </source>
   <form id="default" autocomplete="off" method="POST" action="" enctype="multipart/form-data">
     <snippet ref="s1"/>
   </form>
   <snippet id="s1">
     <row>
-      <col><field ref="e1"/></col>
+      <col><field ref="e1"/><field ref="_converter_available"/></col>
     </row>
+    <if expr="$_converter_available == 1">
+      <row>
+        <col><field ref="convert"/></col>
+      </row>
+    </if>
   </snippet>
 </configuration>

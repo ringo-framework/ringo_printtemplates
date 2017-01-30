@@ -186,7 +186,11 @@ def print_(request):
        form.validate(request.params)):
         template = form.data.get('printtemplates')[0]
         out = _render_template(request, template, item)
-        return _build_final_response(out, request, template)
+        converter = get_converter()
+        if converter and converter.is_available() and request.params.get("convert") == "1":
+            return _build_final_response(out, request, template)
+        else:
+            return _build_response(out.getvalue(), request, template, 'odt')
     else:
         clazz = item.__class__
         rvalue = {}

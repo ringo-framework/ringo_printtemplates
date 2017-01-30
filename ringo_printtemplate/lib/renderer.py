@@ -15,6 +15,7 @@ from ringo.lib.form import (
     get_path_to_form_config,
 )
 from ringo.lib.renderer.dialogs import DialogRenderer
+from ringo_printtemplate.odfconv import get_converter
 
 base_dir = pkg_resources.get_distribution("ringo_printtemplate").location
 template_dir = os.path.join(base_dir, 'ringo_printtemplate', 'templates')
@@ -33,13 +34,19 @@ class PrintDialogRenderer(DialogRenderer):
                                                      'ringo_printtemplate',
                                                      '.')))
         form_config = config.get_form('default')
+        converter = get_converter()
+        if converter and converter.is_available():
+            values = {'_converter_available': 1}
+        else:
+            values = {'_converter_available': 0}
         self.form = Form(form_config,
                          item=clazz,
                          csrf_token=self._request.session.get_csrf_token(),
                          dbsession=request.db,
                          translate=request.translate,
                          url_prefix=get_app_url(request),
-                         eval_url=get_eval_url())
+                         eval_url=get_eval_url(),
+                         values=values)
 
     def render(self):
         values = {}
