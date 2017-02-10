@@ -1,0 +1,23 @@
+#!/usr/bin/env python
+
+"""A simple service which will convert a submitted ODT file into another Office document."""
+
+import os
+import sys
+import argparse
+
+from ringo_printtemplate.server import run
+
+
+def main(arguments):
+    parser = argparse.ArgumentParser(description=__doc__,
+                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument('--host', help="Hostname", default="127.0.0.1")
+    parser.add_argument('--port', help="Severport", type=int, default="5000")
+    parser.add_argument('--ooport', help="Port on which the local office client will listen.", type=int, default="2002")
+    parser.add_argument('--python', help="Python which is used to talk to the office client. ", default="/usr/bin/python")
+    args = parser.parse_args(arguments)
+    run(args.host, args.port, args.python, args.ooport)
+
+if __name__ == '__main__':
+    sys.exit(main(sys.argv[1:]))
