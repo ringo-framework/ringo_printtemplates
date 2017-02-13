@@ -1,4 +1,5 @@
 import base64
+import logging
 from wsgiref.simple_server import make_server
 from pyramid.config import Configurator
 from pyramid.response import Response
@@ -6,6 +7,7 @@ from pyramid.response import Response
 from ringo_printtemplate.odfconv import Converter
 
 CONVERTER = None
+log = logging.getLogger(__name__)
 
 def ping(request):
     return Response("Pong!")
@@ -21,8 +23,14 @@ def convert(request):
             response = Response("Missing ODT content in data.")
             response.status_code = 400
             return response
-        return Response(base64.b64encode(CONVERTER.convert(data, format=request.matchdict.get("format"))))
-
+        try:
+            converted = CONVERTER.convert(data, format=request.matchdict.get("format"))
+            return Response(base64.b64encode(converted))
+        except Exception as e:
+            log.exception(e)
+            response = Response("Conversion failed.")
+            response.status_code = 400
+            return response
 
 def run(host='0.0.0.0', port=5000, oopython='/usr/bin/python', ooport=2001):
     config = Configurator()
