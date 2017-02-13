@@ -104,4 +104,6 @@ class WebConverter(Converter):
         url = self._url + "/{}".format(format)
         data = {'odt': base64.b64encode(data)}
         result = requests.post(url, data=data)
+        if result.status_code != 200:
+            raise EnvironmentError(result.content)
         return base64.b64decode(result.content)
