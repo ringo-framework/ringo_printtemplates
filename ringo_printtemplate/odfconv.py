@@ -93,8 +93,12 @@ class WebConverter(Converter):
                           "available. Forgot to install Libreoffice?")
 
     def is_available(self):
-        result = requests.get(self._url)
-        return result.status_code == 200
+        try:
+            result = requests.get(self._url)
+            return result.status_code == 200
+        except Exception as e:
+            log.exception(e)
+            raise EnvironmentError("Webconverter is not available")
 
     def convert(self, data, format="pdf", update=True):
         url = self._url + "/{}".format(format)
