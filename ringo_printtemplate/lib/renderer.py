@@ -15,6 +15,7 @@ from ringo.lib.form import (
     get_path_to_form_config,
 )
 from ringo.lib.renderer.dialogs import DialogRenderer
+from ringo_printtemplate.model import Printtemplate
 
 base_dir = pkg_resources.get_distribution("ringo_printtemplate").location
 template_dir = os.path.join(base_dir, 'ringo_printtemplate', 'templates')
@@ -42,12 +43,15 @@ class PrintDialogRenderer(DialogRenderer):
                          eval_url=get_eval_url())
 
     def render(self):
+        modul = get_item_modul(self._request, self._item)
+        template_modul = get_item_modul(self._request, Printtemplate)
         values = {}
         values['request'] = self._request
         values['body'] = self._render_body()
-        values['modul'] = get_item_modul(self._request,
-                                         self._item).get_label(plural=True)
+        values['modul'] = modul.get_label(plural=True)
+        values['header'] = template_modul.get_label(plural=True)
         values['action'] = self._action.capitalize()
+        values['ok_text'] = template_modul.get_label(plural=False)
         values['ok_url'] = self._request.current_route_path()
         values['_'] = self._request.translate
         values['cancel_url'] = self._request.referrer

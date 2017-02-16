@@ -2,7 +2,7 @@
 <configuration>
   <source>
     <!-- Define different entity types -->
-    <entity id="e1" name="printtemplates" label="Printtemplate">
+    <entity id="e1" name="printtemplates" label="">
       <renderer type="dropdown" filter="@_modul_id eq %modul.id" remove_filtered="true"/>
     </entity>
   </source>
