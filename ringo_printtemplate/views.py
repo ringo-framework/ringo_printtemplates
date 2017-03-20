@@ -108,7 +108,10 @@ class PrintValueGetter(object):
                 return PrintValueGetter(value, self.request)
             elif isinstance(value, basestring):
                 value = escape(value)
-                return Markup(value.replace("\n", "<text:line-break/>"))
+                value = value.replace("\r\n", "<text:line-break/>")
+                value = value.replace("\r", "<text:line-break/>")
+                value = value.replace("\n", "<text:line-break/>")
+                return Markup(value)
             else:
                 return prettify(self.request, value)
 
