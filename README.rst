@@ -12,8 +12,11 @@ in the local filesystem too::
         
 Where package is the name of the application.
 
-Optionally you can convert the ODT files into PDF. Therefor a libreoffice
-installation must be running on the server.
+Optionally you can convert the ODT files into PDF. Therefore a libreoffice
+installation must be installed on the server. Please also note that
+currently (March 2017) the py3o.renderers.pyuno installation pulled by
+setup.py seems to be broken. A workaround is manually installing the package
+('pip install py3o.renderers.pyuno') before installing ringo_printtemplates.
 
 The following configuation variables are available::
 
