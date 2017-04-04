@@ -54,7 +54,7 @@ class PrintDialogRenderer(DialogRenderer):
         values['ok_text'] = template_modul.get_label(plural=False)
         values['ok_url'] = self._request.current_route_path()
         values['_'] = self._request.translate
-        values['cancel_url'] = self._request.referrer
+        values['cancel_url'] = self._request.referrer or self._request.url.replace("print", "read")
         values['eval_url'] = self.form._eval_url
         values['h'] = ringo.lib.helpers
         return literal(self.template.render(**values))
