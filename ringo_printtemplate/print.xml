@@ -3,7 +3,7 @@
   <source>
     <!-- Define different entity types -->
     <entity id="e1" name="printtemplates" label="Template" required="true">
-      <renderer type="selection" filter="@_modul_id eq %modul.id" remove_filtered="true"/>
+      <renderer align="vertical" type="radio" filter="@_modul_id eq %modul.id" remove_filtered="true"/>
     </entity>
   </source>
   <form id="default" autocomplete="off" method="POST" action="" enctype="multipart/form-data">
