@@ -1,6 +1,5 @@
 import sqlalchemy as sa
-from sqlalchemy.ext.declarative import declared_attr
-
+from sqlalchemy.orm import Session
 from ringo.model import Base
 from ringo.model.base import BaseItem, BaseFactory
 from ringo.model.mixins import Mixin, Owned
@@ -59,16 +58,11 @@ class Printable(Mixin):
         actions.append(action)
         return actions
 
-    # FIXME: Remove this declared attribute/relation. No item will ever
-    # be inserted in this table. Only used to get a list of items in the
-    # printdialog (ti) <2014-10-27 12:28>
-    @declared_attr
-    def printtemplates(cls):
-        tbl_name = "nm_%s_printtemplates" % cls.__name__.lower()
-        nm_table = sa.Table(tbl_name, Base.metadata,
-                            sa.Column('iid', sa.Integer,
-                                      sa.ForeignKey(cls.id)),
-                            sa.Column('tid', sa.Integer,
-                                      sa.ForeignKey("printtemplates.id")))
-        logs = sa.orm.relationship(Printtemplate, secondary=nm_table)
-        return logs
+    @property
+    def printtemplates(self):
+        """Will return a List Printtemplates which are linked to the
+        current type of item. The type of item is determined my its
+        modul id."""
+        session = Session.object_session(self)
+        mid = self.__class__._modul_id
+        return session.query(Printtemplate).filter(Printtemplate.mid == mid).all()

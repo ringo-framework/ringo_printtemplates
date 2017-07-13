@@ -187,7 +187,7 @@ def print_(request):
     if (request.method == 'POST' and
        is_confirmed(request) and
        form.validate(request.params)):
-        template = form.data.get('printtemplates')[0]
+        template = retrieve_print_template(request, form.data.get('printtemplates')[0])
         out = _render_template(request, template, item)
         return _build_final_response(out, request, template)
     else:
