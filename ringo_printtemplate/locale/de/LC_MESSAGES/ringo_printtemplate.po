@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ringo_printtemplate 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-02-16 15:06+0100\n"
+"POT-Creation-Date: 2017-05-30 12:01+0200\n"
 "PO-Revision-Date: 2015-09-02 19:27+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -22,6 +22,11 @@ msgstr ""
 #: ringo_printtemplate/model.py:55
 msgid "Print"
 msgstr "Drucken"
+
+#. Label for printtemplates field in form config
+#: ringo_printtemplate/print.xml:1
+msgid "Template"
+msgstr "Vorlage"
 
 #. Label for name column in overview table config
 #. Label for name field in form config

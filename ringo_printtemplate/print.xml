@@ -2,8 +2,9 @@
 <configuration>
   <source>
     <!-- Define different entity types -->
-    <entity id="e1" name="printtemplates" label="">
-      <renderer type="dropdown"/>
+    <entity id="e1" name="_printtemplates" label="Template" required="true">
+      <options value="printtemplates"/>
+      <renderer align="vertical" type="radio" selected="0" remove_filtered="true"/>
     </entity>
   </source>
   <form id="default" autocomplete="off" method="POST" action="" enctype="multipart/form-data">
