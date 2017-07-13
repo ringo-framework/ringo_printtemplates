@@ -34,13 +34,20 @@ class PrintDialogRenderer(DialogRenderer):
                                                      'ringo_printtemplate',
                                                      '.')))
         form_config = config.get_form('default')
+        # Load available_printtemplates and put them into the form as
+        # external data. This than later used to render the available
+        # printtemplates.
+        mid = clazz._modul_id
+        values = {}
+        values['printtemplates'] = [(p, p.id) for p in self._item.printtemplates]
         self.form = Form(form_config,
                          item=clazz,
                          csrf_token=self._request.session.get_csrf_token(),
                          dbsession=request.db,
                          translate=request.translate,
                          url_prefix=get_app_url(request),
-                         eval_url=get_eval_url())
+                         eval_url=get_eval_url(),
+                         values=values)
 
     def render(self):
         modul = get_item_modul(self._request, self._item)
