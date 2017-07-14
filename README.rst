@@ -34,6 +34,11 @@ The following configuation variables are available::
         # webservice.
         converter.url = http://127.0.0.1:5000
 
+License
+-------
+Ringo is Free Software. It is licensed under the GPL license in version 2 or
+later. See `<http://www.gnu.org/licenses/gpl-2.0>`_ for more details on the license.
+
 Webservice
 ----------
 This extension comes with a small webservice which will take a ODT
