@@ -19,13 +19,12 @@ setup(name='ringo_printtemplate',
       packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
       include_package_data=True,
       zip_safe=False,
-      install_requires=[
-          'ringo',
-          'py3o.template',
-          'py3o.renderers.pyuno',
-          'genshi',
-          'requests'
-      ],
+      requires= ['python_magic',
+                 'ringo',
+                 'py3o.template',
+                 'py3o.renderers.pyuno',
+                 'genshi',
+                 'requests'],
       scripts=['ringo-odfconverter'],
       entry_points="""
       [paste.app_factory]

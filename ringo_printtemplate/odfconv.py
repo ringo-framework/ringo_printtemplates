@@ -4,6 +4,7 @@ import requests
 from tempfile import NamedTemporaryFile
 import logging
 from ringo.lib.cache import CACHE_MISC
+from ringo_printtemplate.lib.mime_detection import check_mime_type_from_buffer
 
 log = logging.getLogger(__name__)
 
