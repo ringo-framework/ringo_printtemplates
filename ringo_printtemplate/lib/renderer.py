@@ -61,10 +61,7 @@ class PrintDialogRenderer(DialogRenderer):
         values['ok_text'] = template_modul.get_label(plural=False)
         values['ok_url'] = self._request.current_route_path()
         values['_'] = self._request.translate
-        if len(self._request.session['history'].history) > 1:
-            values['cancel_url'] = self._request.session['history'].history[-2]  # Get the page before the current page.
-        else:
-            values['cancel_url'] = self._request.url.replace("print", "read")
+        values['cancel_url'] = self._request.ringo.history.last() or self._request.url.replace("print", "read")
         values['eval_url'] = self.form._eval_url
         values['h'] = ringo.lib.helpers
         return literal(self.template.render(**values))
