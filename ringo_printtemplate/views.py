@@ -6,6 +6,7 @@ import StringIO
 import mimetypes
 from xml.sax.saxutils import escape
 from pyramid.view import view_config
+from pyramid.httpexceptions import HTTPInternalServerError
 from py3o.template import Template
 from genshi.core import Markup
 
@@ -27,6 +28,7 @@ from ringo.views.base import web_action_view_mapping, rest_action_view_mapping
 from ringo_printtemplate.lib.renderer import PrintDialogRenderer
 from ringo_printtemplate.odfconv import get_converter
 from ringo_printtemplate.model import Printtemplate
+from ringo_printtemplate.lib.mime_detection import check_mime_type_from_buffer
 
 log = logging.getLogger(__name__)
 
@@ -78,9 +80,11 @@ def save_file(request, item):
         request.POST.get('file').file.seek(0)
         data = request.POST.get('file').file.read()
         filename = request.POST.get('file').filename
+        item.mime = check_mime_type_from_buffer(data)
+        if item.mime != "application/vnd.oasis.opendocument.text":
+            raise AttributeError()
         item.data = data
         item.size = len(data)
-        item.mime = mimetypes.guess_type(filename)[0]
         if not request.POST.get('name'):
             item.name = filename
     except AttributeError:
@@ -126,9 +130,12 @@ def _render_template(request, template, item):
     """
     out = StringIO.StringIO()
     data = load_file(template.data)
-    temp = Template(StringIO.StringIO(data), out)
-    temp.render({"item": item, "print_item": PrintValueGetter(item, request)})
-    return out
+    mime = check_mime_type_from_buffer(data)
+    if mime == "application/vnd.oasis.opendocument.text":
+        temp = Template(StringIO.StringIO(data), out)
+        temp.render({"item": item, "print_item": PrintValueGetter(item, request)})
+        return out
+    return None
 
 
 @view_config(route_name=get_action_routename(Printtemplate, 'print'),
@@ -152,6 +159,10 @@ def _build_final_response(out, request, template):
     :returns: Response object.
 
     """
+    if not out:
+        raise HTTPInternalServerError(detail="A faulty template was found in \
+                                      the database. Creation of the document \
+                                      has been stopped.")
     converter = get_converter()
     if converter and converter.is_available():
         out.seek(0)
