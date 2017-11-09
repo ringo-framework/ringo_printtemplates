@@ -83,3 +83,21 @@ yourself::
 
 An alternative might be to install lxml globally on your system and give your
 virtual environment access to it.
+
+If you get the following message when trying to convert::
+
+        ImportError: No module named uno
+
+This is very likley the reason that you are running in python2 and your
+libreoffice was build against python3. 
+
+If you get the following error when trying to convert::
+
+        OfficeException: Spawned client had an error: /usr/bin/python: can't find '__main__' module in '/home/torsten/Entwicklung/ringo-apps/speq/esf/env/lib/python2.7/site-packages/py3o.renderers.pyuno-0.5-py2.7.egg/py3o/renderers/pyuno/office.py
+
+This is because the installed py3o.renderers.pyuno version which was installed
+as a dependency seems to be broken. For me it helps to uninstall and reinstall
+the library using pip::
+
+        pip uninstall py3o.renderers.pyuno
+        pip install py3o.renderers.pyuno
